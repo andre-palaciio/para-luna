@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>100 Razones · Luna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #FAF6F0;
+      --blush:   #F2D9D0;
+      --rose:    #D4847A;
+      --mauve:   #9B7B84;
+      --plum:    #5C3D4A;
+      --gold:    #C9A97A;
+      --fog:     #EDE8E3;
+      --text:    #3A2930;
+      --muted:   #9A8A8E;
+      --white:   #FFFCFA;
+
+      --font-title: 'Poppins', sans-serif;
+      --font-body:  'Montserrat', sans-serif;
+
+      /* ── CHANGE THIS TO YOUR START DATE ── */
+      --start-date: "2025-01-01";
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.75;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN TEXTURE OVERLAY ────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.6;
+    }
+
+    /* ── HERO HEADER ──────────────────────────────────────── */
+    .hero {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, #F8EDE7 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 90%, #EDD5CE 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 20% 70%, #EAE0DA 0%, transparent 60%);
+      z-index: 0;
+    }
+
+    .petal {
+      position: absolute;
+      border-radius: 50% 5% 50% 5%;
+      opacity: 0;
+      animation: drift linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes drift {
+      0%   { transform: translateY(-40px) rotate(0deg);   opacity: 0; }
+      10%  { opacity: 0.4; }
+      90%  { opacity: 0.2; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 420px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-title);
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1s ease both;
+    }
+
+    .hero-title {
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: clamp(2.4rem, 8vw, 3.4rem);
+      line-height: 1.15;
+      color: var(--plum);
+      margin-bottom: 1rem;
+      animation: fadeUp 1s 0.15s ease both;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--rose);
+    }
+
+    .hero-sub {
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-weight: 400;
+      max-width: 280px;
+      margin: 0 auto 2.5rem;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--plum);
+      color: var(--white);
+      font-family: var(--font-title);
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.85rem 2.2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      animation: fadeUp 1s 0.45s ease both;
+    }
+
+    .hero-cta:hover { background: var(--rose); transform: translateY(-2px); }
+
+    .hero-date-badge {
+      margin-top: 2.4rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+
+    .hero-date-badge span {
+      display: inline-block;
+      background: var(--fog);
+      border-radius: 100px;
+      padding: 0.3rem 1rem;
+      font-weight: 400;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION INTRO ────────────────────────────────────── */
+    .section-intro {
+      padding: 4rem 1.5rem 1rem;
+      text-align: center;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .section-intro h2 {
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: var(--plum);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-intro p {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* ── REASONS GRID ─────────────────────────────────────── */
+    .grid-wrapper {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 2rem 1.2rem 5rem;
+    }
+
+    .reason-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 1.5rem 1.6rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 16px rgba(92, 61, 74, 0.07);
+      border: 1px solid rgba(212, 132, 122, 0.12);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: cardIn 0.6s ease forwards;
+    }
+
+    .reason-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--blush), var(--rose));
+      border-radius: 20px 0 0 20px;
+    }
+
+    .reason-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(92, 61, 74, 0.12);
+    }
+
+    @keyframes cardIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-number {
+      font-family: var(--font-title);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-body {
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    .card-body em {
+      color: var(--mauve);
+      font-style: italic;
+    }
+
+    /* ── TODAY CARD HIGHLIGHT ─────────────────────────────── */
+    .reason-card.today {
+      background: linear-gradient(135deg, #FFF8F5 0%, #FAF0EE 100%);
+      border-color: rgba(212, 132, 122, 0.3);
+      box-shadow: 0 6px 30px rgba(212, 132, 122, 0.18);
+    }
+
+    .reason-card.today::before {
+      background: linear-gradient(to bottom, var(--rose), var(--plum));
+    }
+
+    .today-badge {
+      display: inline-block;
+      background: var(--rose);
+      color: white;
+      font-family: var(--font-title);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.7rem;
+      border-radius: 100px;
+      margin-bottom: 0.7rem;
+    }
+
+    /* ── LOCKED CARD ──────────────────────────────────────── */
+    .reason-card.locked {
+      background: var(--fog);
+      box-shadow: none;
+      border-color: transparent;
+      cursor: default;
+    }
+
+    .reason-card.locked::before {
+      background: var(--fog);
+    }
+
+    .reason-card.locked:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .locked-text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .locked-text::before {
+      content: '✦';
+      font-style: normal;
+      color: var(--blush);
+      font-size: 0.7rem;
+    }
+
+    /* ── DAY 100 SPECIAL SCREEN ───────────────────────────── */
+    .finale {
+      display: none;
+      min-height: 100dvh;
+      background: var(--plum);
+      color: var(--cream);
+      text-align: center;
+      padding: 4rem 2rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .finale.active { display: flex; }
+
+    .finale-glow {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 30%, rgba(212,132,122,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 30% 80%, rgba(201,169,122,0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .finale-icon {
+      font-size: 3.5rem;
+      margin-bottom: 2rem;
+      animation: pulse 3s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.08); }
+    }
+
+    .finale h1 {
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: clamp(2rem, 7vw, 3rem);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: var(--cream);
+      position: relative;
+    }
+
+    .finale h1 em {
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .finale-body {
+      max-width: 340px;
+      margin: 0 auto 2.5rem;
+      font-size: 1rem;
+      line-height: 1.85;
+      color: rgba(250,246,240,0.85);
+      position: relative;
+    }
+
+    .finale-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 2rem auto;
+      opacity: 0.6;
+    }
+
+    .finale-closing {
+      font-family: var(--font-title);
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      position: relative;
+    }
+
+    /* ── FLOATING HEARTS BG (day 100) ────────────────────── */
+    .finale-hearts {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .fh {
+      position: absolute;
+      bottom: -40px;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: riseHeart linear infinite;
+    }
+
+    @keyframes riseHeart {
+      0%   { transform: translateY(0) rotate(-10deg); opacity: 0; }
+      10%  { opacity: 0.25; }
+      80%  { opacity: 0.1; }
+      100% { transform: translateY(-105vh) rotate(20deg); opacity: 0; }
+    }
+
+    /* ── SCROLL-REVEAL ────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    .site-footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────────────────── */
+    .progress-bar-wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 1.2rem 0.5rem;
+    }
+
+    .progress-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+      font-weight: 400;
+    }
+
+    .progress-bar-bg {
+      height: 4px;
+      background: var(--fog);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--blush), var(--rose));
+      border-radius: 100px;
+      transition: width 1.2s ease;
+    }
+
+    /* ── SCROLLBAR ────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--blush); border-radius: 10px; }
+
+    /* ── SPOTIFY BUTTON ───────────────────────────────────── */
+    .spotify-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--plum);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(92,61,74,0.25);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .spotify-btn:hover { background: var(--rose); transform: scale(1.08); }
+    .spotify-btn svg { width: 20px; height: 20px; fill: white; }
+
+    /* ── SPOTIFY PANEL ────────────────────────────────────── */
+    .spotify-panel {
+      position: fixed;
+      top: 4rem;
+      right: 1rem;
+      z-index: 999;
+      width: min(320px, calc(100vw - 2rem));
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(92,61,74,0.18);
+      border: 1px solid rgba(212,132,122,0.15);
+      overflow: hidden;
+      transform-origin: top right;
+      transform: scale(0.85);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
+    }
+    .spotify-panel.open { transform: scale(1); opacity: 1; pointer-events: all; }
+    .spotify-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem 0.4rem;
+    }
+    .spotify-panel-label {
+      font-family: var(--font-title);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mauve);
+    }
+    .spotify-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 0;
+      transition: color 0.2s;
+    }
+    .spotify-close:hover { color: var(--rose); }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ SPOTIFY BUTTON + PANEL ══════════════════════════════ -->
+  <button class="spotify-btn" id="spotifyBtn" aria-label="Abrir playlist" onclick="toggleSpotify()">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.49 17.311a.748.748 0 0 1-1.03.249c-2.819-1.723-6.365-2.112-10.541-1.157a.748.748 0 1 1-.333-1.459c4.571-1.045 8.492-.595 11.655 1.337a.748.748 0 0 1 .249 1.03zm1.465-3.26a.936.936 0 0 1-1.287.308c-3.226-1.983-8.144-2.558-11.963-1.4a.937.937 0 0 1-.543-1.791c4.361-1.323 9.78-.683 13.485 1.596a.936.936 0 0 1 .308 1.287zm.126-3.396C15.375 8.48 9.74 8.27 6.302 9.35a1.124 1.124 0 1 1-.653-2.151c3.989-1.21 10.62-.977 14.81 1.588a1.124 1.124 0 0 1-1.378 1.768z"/>
+    </svg>
+  </button>
+
+  <div class="spotify-panel" id="spotifyPanel">
+    <div class="spotify-panel-header">
+      <span class="spotify-panel-label">🌙 Nuestra playlist</span>
+      <button class="spotify-close" onclick="toggleSpotify()" aria-label="Cerrar">✕</button>
+    </div>
+    <iframe style="border-radius:0 0 16px 16px" src="https://open.spotify.com/embed/playlist/7hYZLGS5CqmFh8x4LEASHW?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+
+  <!-- ═══ HERO ═══════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <!-- petals injected via JS -->
+    <div class="hero-content">
+      <p class="hero-eyebrow">Un regalo que crece cada día</p>
+      <h1 class="hero-title">100 razones<br/><em>para amarte, Luna</em></h1>
+      <p class="hero-sub">Cada día que pasa, una nueva razón se revela. Solo para ti.</p>
+      <button class="hero-cta" onclick="scrollToToday()">Descubrir</button>
+      <div class="hero-date-badge" id="heroBadge"></div>
+    </div>
+  </section>
+
+  <!-- ═══ MAIN CONTENT ════════════════════════════════════════ -->
+  <main id="mainContent">
+    <div class="section-intro reveal">
+      <h2 id="sectionTitle">Las razones de hoy</h2>
+      <p id="sectionDesc">Aquí viven los momentos que me llenan el corazón.</p>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar-wrap reveal">
+      <div class="progress-bar-label">
+        <span id="progressLabel">Tu camino</span>
+        <span id="progressCount"></span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <div class="grid-wrapper" id="grid"></div>
+  </main>
+
+  <!-- ═══ FINALE (DAY 100) ════════════════════════════════════ -->
+  <section class="finale" id="finale">
+    <div class="finale-glow"></div>
+    <div class="finale-hearts" id="finaleHearts"></div>
+    <div style="position:relative; z-index:1; max-width:380px;">
+      <div class="finale-icon">🌙</div>
+      <h1>Cien días.<br/><em>Cien razones, Luna.</em></h1>
+      <div class="finale-divider"></div>
+      <p class="finale-body">
+        Si llegas aquí hoy, significa que hemos compartido cien días juntos.
+        Cien mañanas, cien momentos en los que elegí quererte con más fuerza que el día anterior.
+        <br/><br/>
+        Desde el día en que te conocí supe que no eras una etapa. 
+        Eres <em>mi lugar</em>. Eres <em>mi calma</em>. Eres la razón por la que llevo una luna tatuada.
+        <br/><br/>
+        Cien razones escritas, y todavía me faltan miles por decirte.
+        Gracias por existir, Luna. Gracias por dejarme amarte.
+      </p>
+      <div class="finale-divider"></div>
+      <p class="finale-closing">Con todo mi amor, siempre 🌙</p>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══════════════════════════════════════════════ -->
+  <footer class="site-footer" id="siteFooter">
+    Hecho con amor para Luna · Cada día cuenta 🌙
+  </footer>
+
+  <!-- ═══ JAVASCRIPT ════════════════════════════════════════════ -->
+  <script>
+    /* ─────────────────────────────────────────────────────────
+       ★  CONFIGURA AQUÍ tu fecha de inicio (YYYY-MM-DD)
+    ───────────────────────────────────────────────────────── */
+    const START_DATE = "2026-02-17";
+
+    /* ─────────────────────────────────────────────────────────
+       ★  LAS 100 RAZONES
+          Edita cada texto libremente.
+    ───────────────────────────────────────────────────────── */
+    const REASONS = [
+      /* 01 */ "Porque tus besos me hacen sentir en paz.",
+      /* 02 */ "Porque cuando me besas la nariz me pongo feliz.",
+      /* 03 */ "Porque verte me hace feliz <em>de verdad</em>.",
+      /* 04 */ "Porque te extraño incluso cuando todo está bien.",
+      /* 05 */ "Porque tu abrazo es mi lugar seguro.",
+      /* 06 */ "Porque cada momento contigo es maravilloso.",
+      /* 07 */ "Porque contigo el tiempo pasa diferente.",
+      /* 08 */ "Porque me siento orgulloso de ti.",
+      /* 09 */ "Porque admiro la mujer que eres.",
+      /* 10 */ "Porque eres inteligente.",
+      /* 11 */ "Porque tu forma de pensar me encanta.",
+      /* 12 */ "Porque me inspiras.",
+      /* 13 */ "Porque eres una mujer maravillosa.",
+      /* 14 */ "Porque tienes un corazón bonito.",
+      /* 15 */ "Porque me haces sentir amado.",
+      /* 16 */ "Porque contigo soy <em>yo</em>.",
+      /* 17 */ "Porque me aceptas como soy.",
+      /* 18 */ "Porque me miras con ternura.",
+      /* 19 */ "Porque tu sonrisa me calma.",
+      /* 20 */ "Porque tu risa se me queda grabada.",
+      /* 21 */ "Porque me gusta cómo me besas.",
+      /* 22 */ "Porque me gusta cómo me miras.",
+      /* 23 */ "Porque me gusta cómo me hablas.",
+      /* 24 */ "Porque me gusta cómo me cuidas.",
+      /* 25 */ "Porque me gusta dormir contigo.",
+      /* 26 */ "Porque despertar a tu lado se siente bien.",
+      /* 27 */ "Porque contigo lo simple es especial.",
+      /* 28 */ "Porque cada salida contigo vale la pena.",
+      /* 29 */ "Porque cada recuerdo contigo importa.",
+      /* 30 */ "Porque contigo todo se siente <em>real</em>.",
+      /* 31 */ "Porque eres fuerte.",
+      /* 32 */ "Porque eres sensible.",
+      /* 33 */ "Porque eres auténtica.",
+      /* 34 */ "Porque no finges.",
+      /* 35 */ "Porque confías en mí.",
+      /* 36 */ "Porque yo confío en ti.",
+      /* 37 */ "Porque creemos el uno en el otro.",
+      /* 38 */ "Porque incluso en los momentos difíciles sigues aquí.",
+      /* 39 */ "Porque no te rindes fácil.",
+      /* 40 */ "Porque luchas por lo que amas.",
+      /* 41 */ "Porque me haces querer ser mejor.",
+      /* 42 */ "Porque contigo aprendí a amar bonito.",
+      /* 43 */ "Porque contigo aprendí a tener paciencia.",
+      /* 44 */ "Porque contigo aprendí a cuidar.",
+      /* 45 */ "Porque me haces sentir importante.",
+      /* 46 */ "Porque me eliges.",
+      /* 47 */ "Porque yo te elijo todos los días.",
+      /* 48 */ "Porque contigo quiero un futuro.",
+      /* 49 */ "Porque contigo quiero crecer.",
+      /* 50 */ "Porque contigo quiero <em>todo</em>.",
+      /* 51 */ "Porque tu presencia me tranquiliza.",
+      /* 52 */ "Porque tu voz me hace bien.",
+      /* 53 */ "Porque tu esencia es única.",
+      /* 54 */ "Porque me enamoré de tu alma.",
+      /* 55 */ "Porque me enamoré de tu manera de ser.",
+      /* 56 */ "Porque me enamoré de cómo me haces sentir.",
+      /* 57 */ "Porque me enamoré sin darme cuenta.",
+      /* 58 */ "Porque llegaste y te quedaste.",
+      /* 59 */ "Porque eres parte de mi vida.",
+      /* 60 */ "Porque eres parte de mi corazón.",
+      /* 61 */ "Porque la distancia no cambia lo que siento.",
+      /* 62 */ "Porque extrañarte confirma cuánto te amo.",
+      /* 63 */ "Porque pensar en ti me da fuerza.",
+      /* 64 */ "Porque imaginarte me da ilusión.",
+      /* 65 */ "Porque esperarte vale la pena.",
+      /* 66 */ "Porque volver a verte es lo que más quiero.",
+      /* 67 */ "Porque contigo los sueños se sienten posibles.",
+      /* 68 */ "Porque contigo quiero seguir creando recuerdos.",
+      /* 69 */ "Porque cada etapa contigo importa.",
+      /* 70 */ "Porque no eres una etapa.",
+      /* 71 */ "Porque eres mi lugar.",
+      /* 72 */ "Porque eres mi calma.",
+      /* 73 */ "Porque eres mi amor.",
+      /* 74 */ "Porque contigo me siento completo.",
+      /* 75 */ "Porque contigo soy feliz.",
+      /* 76 */ "Porque contigo me siento en casa.",
+      /* 77 */ "Porque contigo todo tiene sentido.",
+      /* 78 */ "Porque contigo la vida es más bonita.",
+      /* 79 */ "Porque contigo quiero quedarme.",
+      /* 80 */ "Porque contigo quiero <em>siempre</em>.",
+      /* 81 */ "Porque llevo una luna tatuada pensando en ti.",
+      /* 82 */ "Porque Luna eres tú.",
+      /* 83 */ "Porque no hay nadie como tú.",
+      /* 84 */ "Porque no te cambiaría por nada.",
+      /* 85 */ "Porque te amo incluso en los días difíciles.",
+      /* 86 */ "Porque te amo con paciencia.",
+      /* 87 */ "Porque te amo con respeto.",
+      /* 88 */ "Porque te amo con todo mi corazón.",
+      /* 89 */ "Porque te amo sin condiciones.",
+      /* 90 */ "Porque te amo de verdad.",
+      /* 91 */ "Porque quiero cuidarte.",
+      /* 92 */ "Porque quiero verte feliz.",
+      /* 93 */ "Porque quiero acompañarte.",
+      /* 94 */ "Porque quiero caminar a tu lado.",
+      /* 95 */ "Porque quiero construir contigo.",
+      /* 96 */ "Porque quiero una vida contigo.",
+      /* 97 */ "Porque quiero amarte bien.",
+      /* 98 */ "Porque quiero amarte bonito.",
+      /* 99 */ "Porque quiero amarte siempre.",
+      /* 100 */ "Porque amar a <em>Luna</em> es lo mejor que me ha pasado."
+    ];
+
+    /* ─────────────────────────────────────────────────────────
+       UTILS
+    ───────────────────────────────────────────────────────── */
+    function daysBetween(dateStr) {
+      const start = new Date(dateStr + "T00:00:00");
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const diff = today - start;
+      return Math.floor(diff / (1000 * 60 * 60 * 24));
+    }
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + "T00:00:00");
+      return d.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       PETALS in HERO
+    ───────────────────────────────────────────────────────── */
+    function buildPetals() {
+      const hero = document.getElementById("hero");
+      const colors = ["#F2D9D0","#E8C5BD","#D4C4C0","#F0DDD6"];
+      for (let i = 0; i < 14; i++) {
+        const p = document.createElement("div");
+        p.className = "petal";
+        const size = 6 + Math.random() * 10;
+        p.style.cssText = `
+          width:${size}px; height:${size * 1.4}px;
+          background:${colors[Math.floor(Math.random()*colors.length)]};
+          left:${Math.random()*100}%;
+          animation-duration:${10 + Math.random()*14}s;
+          animation-delay:${Math.random()*10}s;
+          border-radius: ${Math.random()>0.5 ? '50% 5% 50% 5%' : '5% 50% 5% 50%'};
+        `;
+        hero.appendChild(p);
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       FLOATING HEARTS (finale)
+    ───────────────────────────────────────────────────────── */
+    function buildFinaleHearts() {
+      const wrap = document.getElementById("finaleHearts");
+      const emojis = ["♥","✦","·","❧"];
+      for (let i = 0; i < 18; i++) {
+        const h = document.createElement("div");
+        h.className = "fh";
+        h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        h.style.cssText = `
+          left:${Math.random()*100}%;
+          font-size:${0.8 + Math.random()*1.2}rem;
+          animation-duration:${8 + Math.random()*12}s;
+          animation-delay:${Math.random()*10}s;
+          color: rgba(250,246,240,${0.1 + Math.random()*0.2});
+        `;
+        wrap.appendChild(h);
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       RENDER
+    ───────────────────────────────────────────────────────── */
+    function render() {
+      const elapsed = daysBetween(START_DATE); // 0-based (day 0 = day 1 unlocked)
+      const unlockedCount = Math.min(elapsed + 1, 100);
+      const isComplete = elapsed >= 99;
+
+      /* ── HERO BADGE ── */
+      const badge = document.getElementById("heroBadge");
+      if (elapsed < 0) {
+        badge.innerHTML = `<span>Este regalo comienza el ${formatDate(START_DATE)}</span>`;
+      } else if (isComplete) {
+        badge.innerHTML = `<span>✦ 100 días de amor desbloqueados ✦</span>`;
+      } else {
+        badge.innerHTML = `<span>Día ${elapsed + 1} de 100 desbloqueado</span>`;
+      }
+
+      /* ── PROGRESS BAR ── */
+      const pct = Math.round((unlockedCount / 100) * 100);
+      document.getElementById("progressFill").style.width = pct + "%";
+      document.getElementById("progressCount").textContent = `${unlockedCount} / 100`;
+      document.getElementById("progressLabel").textContent = elapsed < 0 ? "Aún no ha comenzado" : "Tu recorrido";
+
+      /* ── SECTION TITLE ── */
+      if (elapsed < 0) {
+        document.getElementById("sectionTitle").textContent = "El camino está por comenzar";
+        document.getElementById("sectionDesc").textContent = `Vuelve el ${formatDate(START_DATE)} para descubrir la primera razón.`;
+      } else if (isComplete) {
+        document.getElementById("sectionTitle").textContent = "Cien días. Cien razones.";
+        document.getElementById("sectionDesc").textContent = "Has llegado al final de este recorrido. Y al comienzo de otro.";
+      } else {
+        const days = elapsed + 1;
+        document.getElementById("sectionTitle").textContent = `Razón ${days} para Luna`;
+        document.getElementById("sectionDesc").textContent = "Cada día que pasa, una nueva pieza de este amor se revela.";
+      }
+
+      /* ── CARDS ── */
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
+
+      if (elapsed < 0) {
+        // Nothing unlocked yet — show all locked
+        for (let i = 0; i < 100; i++) {
+          grid.appendChild(buildCard(i, "locked"));
+        }
+        return;
+      }
+
+      /* Render unlocked cards (newest first so today is on top) */
+      for (let i = elapsed; i >= 0 && i < 100; i--) {
+        const type = i === elapsed ? "today" : "unlocked";
+        grid.appendChild(buildCard(i, type));
+      }
+
+      /* Locked cards below */
+      for (let i = Math.min(elapsed + 1, 100); i < 100; i++) {
+        grid.appendChild(buildCard(i, "locked"));
+      }
+
+      /* ── FINALE ── */
+      if (isComplete) {
+        document.getElementById("finale").classList.add("active");
+        buildFinaleHearts();
+      }
+    }
+
+    function buildCard(index, type) {
+      const card = document.createElement("div");
+      card.className = `reason-card ${type}`;
+      card.style.animationDelay = `${(100 - index) * 0.03}s`;
+
+      const num = document.createElement("div");
+      num.className = "card-number";
+      num.textContent = `Razón · ${String(index + 1).padStart(2, "0")}`;
+
+      const body = document.createElement("div");
+
+      if (type === "locked") {
+        body.className = "locked-text";
+        body.textContent = "Esta razón se revelará cuando llegue su momento 💫";
+      } else {
+        if (type === "today") {
+          const badge = document.createElement("div");
+          badge.className = "today-badge";
+          badge.textContent = "✦ Hoy";
+          card.appendChild(badge);
+        }
+        body.className = "card-body";
+        body.innerHTML = REASONS[index];
+      }
+
+      card.appendChild(num);
+      card.appendChild(body);
+      return card;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       SCROLL REVEAL
+    ───────────────────────────────────────────────────────── */
+    function initReveal() {
+      const els = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } });
+      }, { threshold: 0.15 });
+      els.forEach(el => io.observe(el));
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       SPOTIFY TOGGLE
+    ───────────────────────────────────────────────────────── */
+    function toggleSpotify() {
+      const panel = document.getElementById("spotifyPanel");
+      panel.classList.toggle("open");
+    }
+
+    // Close panel when clicking outside
+    document.addEventListener("click", (e) => {
+      const panel = document.getElementById("spotifyPanel");
+      const btn   = document.getElementById("spotifyBtn");
+      if (panel.classList.contains("open") && !panel.contains(e.target) && !btn.contains(e.target)) {
+        panel.classList.remove("open");
+      }
+    });
+
+    /* ─────────────────────────────────────────────────────────
+       SCROLL TO TODAY
+    ───────────────────────────────────────────────────────── */
+    function scrollToToday() {
+      const todayCard = document.querySelector(".reason-card.today");
+      const target = todayCard || document.getElementById("mainContent");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       INIT
+    ───────────────────────────────────────────────────────── */
+    document.addEventListener("DOMContentLoaded", () => {
+      buildPetals();
+      render();
+      initReveal();
+    });
+  </script>
+</body>
+</html>
