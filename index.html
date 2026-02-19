@@ -472,125 +472,6 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--blush); border-radius: 10px; }
 
-    /* ── PIN SCREEN ───────────────────────────────────────── */
-    .pin-screen {
-      position: fixed;
-      inset: 0;
-      z-index: 9000;
-      background: var(--cream);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1.5rem;
-      text-align: center;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .pin-screen.hidden {
-      opacity: 0;
-      transform: scale(1.04);
-      pointer-events: none;
-    }
-
-    .pin-bg {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, #F8EDE7 0%, transparent 70%),
-        radial-gradient(ellipse 60% 50% at 80% 90%, #EDD5CE 0%, transparent 60%);
-      z-index: 0;
-    }
-
-    .pin-content {
-      position: relative;
-      z-index: 1;
-      max-width: 320px;
-      width: 100%;
-    }
-
-    .pin-moon {
-      font-size: 2.6rem;
-      margin-bottom: 1.2rem;
-      animation: floatMoon 4s ease-in-out infinite;
-    }
-
-    @keyframes floatMoon {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-8px); }
-    }
-
-    .pin-title {
-      font-family: var(--font-title);
-      font-weight: 600;
-      font-size: 1.5rem;
-      color: var(--plum);
-      margin-bottom: 0.4rem;
-    }
-
-    .pin-sub {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 2rem;
-    }
-
-    .pin-boxes {
-      display: flex;
-      gap: 0.9rem;
-      justify-content: center;
-      margin-bottom: 0.6rem;
-    }
-
-    .pin-box {
-      width: 52px;
-      height: 60px;
-      border: 2px solid var(--blush);
-      border-radius: 14px;
-      background: var(--white);
-      font-family: var(--font-title);
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: var(--plum);
-      text-align: center;
-      outline: none;
-      caret-color: var(--rose);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      -webkit-appearance: none;
-    }
-
-    .pin-box:focus {
-      border-color: var(--rose);
-      box-shadow: 0 0 0 3px rgba(212,132,122,0.18);
-    }
-
-    .pin-box.filled {
-      border-color: var(--mauve);
-      background: #FFF5F3;
-    }
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%       { transform: translateX(-8px); }
-      40%       { transform: translateX(8px); }
-      60%       { transform: translateX(-6px); }
-      80%       { transform: translateX(6px); }
-    }
-
-    .pin-boxes.shake {
-      animation: shake 0.4s ease;
-    }
-
-    .pin-error {
-      font-size: 0.78rem;
-      color: var(--rose);
-      min-height: 1.2em;
-      margin-top: 0.3rem;
-      font-style: italic;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .pin-error.show { opacity: 1; }
-
     /* ── SPOTIFY BUTTON ───────────────────────────────────── */
     .spotify-btn {
       position: fixed;
@@ -659,23 +540,6 @@
   </style>
 </head>
 <body>
-
-  <!-- ═══ PIN SCREEN ══════════════════════════════════════════ -->
-  <div class="pin-screen" id="pinScreen">
-    <div class="pin-bg"></div>
-    <div class="pin-content">
-      <div class="pin-moon">🌙</div>
-      <h1 class="pin-title">Hola, Luna</h1>
-      <p class="pin-sub">Ingresa tu PIN para entrar</p>
-      <div class="pin-boxes" id="pinBoxes">
-        <input class="pin-box" id="p0" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="off" />
-        <input class="pin-box" id="p1" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="off" />
-        <input class="pin-box" id="p2" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="off" />
-        <input class="pin-box" id="p3" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="off" />
-      </div>
-      <p class="pin-error" id="pinError">PIN incorrecto, intenta de nuevo</p>
-    </div>
-  </div>
 
   <!-- ═══ SPOTIFY BUTTON + PANEL ══════════════════════════════ -->
   <button class="spotify-btn" id="spotifyBtn" aria-label="Abrir playlist" onclick="toggleSpotify()">
@@ -1036,83 +900,6 @@
     }
 
     /* ─────────────────────────────────────────────────────────
-       PIN LOGIC
-    ───────────────────────────────────────────────────────── */
-    const CORRECT_PIN = "0302";
-
-    function initPin() {
-      // If already unlocked this session, skip
-      if (localStorage.getItem("unlocked") === "1") {
-        document.getElementById("pinScreen").classList.add("hidden");
-        return;
-      }
-
-      const boxes  = Array.from(document.querySelectorAll(".pin-box"));
-      const wrap   = document.getElementById("pinBoxes");
-      const errMsg = document.getElementById("pinError");
-
-      // Focus first box on load
-      setTimeout(() => boxes[0].focus(), 300);
-
-      boxes.forEach((box, i) => {
-        box.addEventListener("input", (e) => {
-          // Allow only digits
-          box.value = box.value.replace(/\D/g, "").slice(-1);
-
-          if (box.value) {
-            box.classList.add("filled");
-            // Move to next
-            if (i < 3) boxes[i + 1].focus();
-            else checkPin(boxes, wrap, errMsg);
-          } else {
-            box.classList.remove("filled");
-          }
-        });
-
-        box.addEventListener("keydown", (e) => {
-          if (e.key === "Backspace" && !box.value && i > 0) {
-            boxes[i - 1].value = "";
-            boxes[i - 1].classList.remove("filled");
-            boxes[i - 1].focus();
-          }
-        });
-
-        // Prevent non-numeric paste
-        box.addEventListener("paste", (e) => {
-          e.preventDefault();
-          const text = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g,"");
-          text.split("").slice(0,4).forEach((ch, idx) => {
-            if (boxes[idx]) { boxes[idx].value = ch; boxes[idx].classList.add("filled"); }
-          });
-          const last = Math.min(text.length, 3);
-          boxes[last].focus();
-          if (text.length >= 4) checkPin(boxes, wrap, errMsg);
-        });
-      });
-    }
-
-    function checkPin(boxes, wrap, errMsg) {
-      const entered = boxes.map(b => b.value).join("");
-      if (entered === CORRECT_PIN) {
-        localStorage.setItem("unlocked", "1");
-        errMsg.classList.remove("show");
-        const screen = document.getElementById("pinScreen");
-        screen.classList.add("hidden");
-      } else {
-        // Shake + clear
-        wrap.classList.remove("shake");
-        void wrap.offsetWidth; // reflow to restart animation
-        wrap.classList.add("shake");
-        errMsg.classList.add("show");
-        setTimeout(() => {
-          boxes.forEach(b => { b.value = ""; b.classList.remove("filled"); });
-          boxes[0].focus();
-          errMsg.classList.remove("show");
-        }, 600);
-      }
-    }
-
-    /* ─────────────────────────────────────────────────────────
        SPOTIFY TOGGLE
     ───────────────────────────────────────────────────────── */
     function toggleSpotify() {
@@ -1144,7 +931,6 @@
        INIT
     ───────────────────────────────────────────────────────── */
     document.addEventListener("DOMContentLoaded", () => {
-      initPin();
       buildPetals();
       render();
       initReveal();
