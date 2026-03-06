@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
   <style>
-    /* ── RESET & BASE ─────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -26,9 +25,6 @@
 
       --font-title: 'Poppins', sans-serif;
       --font-body:  'Montserrat', sans-serif;
-
-      /* ── CHANGE THIS TO YOUR START DATE ── */
-      --start-date: "2025-01-01";
     }
 
     html { scroll-behavior: smooth; }
@@ -43,7 +39,6 @@
       overflow-x: hidden;
     }
 
-    /* ── GRAIN TEXTURE OVERLAY ────────────────────────────── */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -53,7 +48,7 @@
       opacity: 0.6;
     }
 
-    /* ── HERO HEADER ──────────────────────────────────────── */
+    /* ── HERO ── */
     .hero {
       min-height: 100dvh;
       display: flex;
@@ -169,12 +164,120 @@
       font-weight: 400;
     }
 
+    /* ── FLIGHT COUNTDOWN ── */
+    .flight-countdown {
+      margin-top: 2rem;
+      animation: fadeUp 1s 0.75s ease both;
+    }
+
+    .flight-countdown-label {
+      font-family: var(--font-title);
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--mauve);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .flight-countdown-label::before,
+    .flight-countdown-label::after {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--blush);
+    }
+
+    .countdown-blocks {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .countdown-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--white);
+      border: 1px solid rgba(212, 132, 122, 0.18);
+      border-radius: 14px;
+      padding: 0.7rem 0.9rem 0.5rem;
+      min-width: 60px;
+      box-shadow: 0 2px 12px rgba(92, 61, 74, 0.07);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .countdown-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--blush), var(--rose));
+    }
+
+    .countdown-num {
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: 1.7rem;
+      line-height: 1;
+      color: var(--plum);
+      letter-spacing: -0.02em;
+      transition: all 0.3s ease;
+    }
+
+    .countdown-unit {
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .countdown-sep {
+      font-family: var(--font-title);
+      font-weight: 300;
+      font-size: 1.4rem;
+      color: var(--blush);
+      padding-bottom: 0.9rem;
+      line-height: 1;
+    }
+
+    .flight-arrived {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #FFF8F5, #FAF0EE);
+      border: 1px solid rgba(212, 132, 122, 0.3);
+      border-radius: 100px;
+      padding: 0.6rem 1.4rem;
+      font-family: var(--font-title);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--rose);
+      box-shadow: 0 4px 16px rgba(212, 132, 122, 0.18);
+      animation: pulse-soft 2s ease infinite;
+    }
+
+    @keyframes pulse-soft {
+      0%, 100% { box-shadow: 0 4px 16px rgba(212, 132, 122, 0.18); }
+      50%       { box-shadow: 0 6px 24px rgba(212, 132, 122, 0.35); }
+    }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── SECTION INTRO ────────────────────────────────────── */
+    /* ── SECTION INTRO ── */
     .section-intro {
       padding: 4rem 1.5rem 1rem;
       text-align: center;
@@ -195,7 +298,7 @@
       color: var(--muted);
     }
 
-    /* ── REASONS GRID ─────────────────────────────────────── */
+    /* ── REASONS GRID ── */
     .grid-wrapper {
       max-width: 480px;
       margin: 0 auto;
@@ -253,12 +356,8 @@
       line-height: 1.7;
     }
 
-    .card-body em {
-      color: var(--mauve);
-      font-style: italic;
-    }
+    .card-body em { color: var(--mauve); font-style: italic; }
 
-    /* ── TODAY CARD HIGHLIGHT ─────────────────────────────── */
     .reason-card.today {
       background: linear-gradient(135deg, #FFF8F5 0%, #FAF0EE 100%);
       border-color: rgba(212, 132, 122, 0.3);
@@ -283,7 +382,6 @@
       margin-bottom: 0.7rem;
     }
 
-    /* ── LOCKED CARD ──────────────────────────────────────── */
     .reason-card.locked {
       background: var(--fog);
       box-shadow: none;
@@ -291,14 +389,8 @@
       cursor: default;
     }
 
-    .reason-card.locked::before {
-      background: var(--fog);
-    }
-
-    .reason-card.locked:hover {
-      transform: none;
-      box-shadow: none;
-    }
+    .reason-card.locked::before { background: var(--fog); }
+    .reason-card.locked:hover { transform: none; box-shadow: none; }
 
     .locked-text {
       font-size: 0.88rem;
@@ -316,7 +408,7 @@
       font-size: 0.7rem;
     }
 
-    /* ── DAY 100 SPECIAL SCREEN ───────────────────────────── */
+    /* ── FINALE ── */
     .finale {
       display: none;
       min-height: 100dvh;
@@ -394,7 +486,6 @@
       position: relative;
     }
 
-    /* ── FLOATING HEARTS BG (day 100) ────────────────────── */
     .finale-hearts {
       position: absolute; inset: 0;
       pointer-events: none;
@@ -417,19 +508,16 @@
       100% { transform: translateY(-105vh) rotate(20deg); opacity: 0; }
     }
 
-    /* ── SCROLL-REVEAL ────────────────────────────────────── */
+    /* ── SCROLL REVEAL ── */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── FOOTER ───────────────────────────────────────────── */
+    /* ── FOOTER ── */
     .site-footer {
       text-align: center;
       padding: 3rem 1.5rem;
@@ -437,7 +525,7 @@
       color: var(--muted);
     }
 
-    /* ── PROGRESS BAR ─────────────────────────────────────── */
+    /* ── PROGRESS BAR ── */
     .progress-bar-wrap {
       max-width: 480px;
       margin: 0 auto;
@@ -467,12 +555,11 @@
       transition: width 1.2s ease;
     }
 
-    /* ── SCROLLBAR ────────────────────────────────────────── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--blush); border-radius: 10px; }
 
-    /* ── SPOTIFY BUTTON ───────────────────────────────────── */
+    /* ── SPOTIFY ── */
     .spotify-btn {
       position: fixed;
       top: 1rem;
@@ -493,7 +580,6 @@
     .spotify-btn:hover { background: var(--rose); transform: scale(1.08); }
     .spotify-btn svg { width: 20px; height: 20px; fill: white; }
 
-    /* ── SPOTIFY PANEL ────────────────────────────────────── */
     .spotify-panel {
       position: fixed;
       top: 4rem;
@@ -541,7 +627,6 @@
 </head>
 <body>
 
-  <!-- ═══ SPOTIFY BUTTON + PANEL ══════════════════════════════ -->
   <button class="spotify-btn" id="spotifyBtn" aria-label="Abrir playlist" onclick="toggleSpotify()">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.49 17.311a.748.748 0 0 1-1.03.249c-2.819-1.723-6.365-2.112-10.541-1.157a.748.748 0 1 1-.333-1.459c4.571-1.045 8.492-.595 11.655 1.337a.748.748 0 0 1 .249 1.03zm1.465-3.26a.936.936 0 0 1-1.287.308c-3.226-1.983-8.144-2.558-11.963-1.4a.937.937 0 0 1-.543-1.791c4.361-1.323 9.78-.683 13.485 1.596a.936.936 0 0 1 .308 1.287zm.126-3.396C15.375 8.48 9.74 8.27 6.302 9.35a1.124 1.124 0 1 1-.653-2.151c3.989-1.21 10.62-.977 14.81 1.588a1.124 1.124 0 0 1-1.378 1.768z"/>
@@ -556,27 +641,51 @@
     <iframe style="border-radius:0 0 16px 16px" src="https://open.spotify.com/embed/playlist/7hYZLGS5CqmFh8x4LEASHW?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
 
-  <!-- ═══ HERO ═══════════════════════════════════════════════ -->
+  <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-bg"></div>
-    <!-- petals injected via JS -->
     <div class="hero-content">
       <p class="hero-eyebrow">Un regalo que crece cada día</p>
       <h1 class="hero-title">100 razones<br/><em>para amarte, Luna</em></h1>
       <p class="hero-sub">Cada día que pasa, una nueva razón se revela. Solo para ti.</p>
       <button class="hero-cta" onclick="scrollToToday()">Descubrir</button>
       <div class="hero-date-badge" id="heroBadge"></div>
+
+      <!-- ✈️ FLIGHT COUNTDOWN -->
+      <div class="flight-countdown" id="flightCountdown">
+        <div class="flight-countdown-label">🌙☀️ &nbsp;Nos vemos en</div>
+        <div class="countdown-blocks" id="countdownBlocks">
+          <div class="countdown-block">
+            <span class="countdown-num" id="cd-days">--</span>
+            <span class="countdown-unit">días</span>
+          </div>
+          <div class="countdown-sep">·</div>
+          <div class="countdown-block">
+            <span class="countdown-num" id="cd-hours">--</span>
+            <span class="countdown-unit">horas</span>
+          </div>
+          <div class="countdown-sep">·</div>
+          <div class="countdown-block">
+            <span class="countdown-num" id="cd-mins">--</span>
+            <span class="countdown-unit">min</span>
+          </div>
+          <div class="countdown-sep">·</div>
+          <div class="countdown-block">
+            <span class="countdown-num" id="cd-secs">--</span>
+            <span class="countdown-unit">seg</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══ MAIN CONTENT ════════════════════════════════════════ -->
+  <!-- MAIN -->
   <main id="mainContent">
     <div class="section-intro reveal">
       <h2 id="sectionTitle">Las razones de hoy</h2>
       <p id="sectionDesc">Aquí viven los momentos que me llenan el corazón.</p>
     </div>
 
-    <!-- PROGRESS BAR -->
     <div class="progress-bar-wrap reveal">
       <div class="progress-bar-label">
         <span id="progressLabel">Tu camino</span>
@@ -590,7 +699,7 @@
     <div class="grid-wrapper" id="grid"></div>
   </main>
 
-  <!-- ═══ FINALE (DAY 100) ════════════════════════════════════ -->
+  <!-- FINALE -->
   <section class="finale" id="finale">
     <div class="finale-glow"></div>
     <div class="finale-hearts" id="finaleHearts"></div>
@@ -613,134 +722,152 @@
     </div>
   </section>
 
-  <!-- ═══ FOOTER ═══════════════════════════════════════════════ -->
   <footer class="site-footer" id="siteFooter">
     Hecho con amor para Luna · Cada día cuenta 🌙
   </footer>
 
-  <!-- ═══ JAVASCRIPT ════════════════════════════════════════════ -->
   <script>
-    /* ─────────────────────────────────────────────────────────
-       ★  CONFIGURA AQUÍ tu fecha de inicio (YYYY-MM-DD)
-    ───────────────────────────────────────────────────────── */
-    const START_DATE = "2026-02-17";
+    /* ── CONFIG ── */
+    const START_DATE  = "2026-02-17";
+    // Fecha y hora del vuelo (hora local de Bogotá, UTC-5)
+    const FLIGHT_DATE = new Date("2026-03-21T11:03:00-05:00");
 
-    /* ─────────────────────────────────────────────────────────
-       ★  LAS 100 RAZONES
-          Edita cada texto libremente.
-    ───────────────────────────────────────────────────────── */
     const REASONS = [
-      /* 01 */ "Porque tus besos me hacen sentir en paz.",
-      /* 02 */ "Porque cuando me besas la nariz me pongo feliz.",
-      /* 03 */ "Porque verte me hace feliz <em>de verdad</em>.",
-      /* 04 */ "Porque te extraño incluso cuando todo está bien.",
-      /* 05 */ "Porque tu abrazo es mi lugar seguro.",
-      /* 06 */ "Porque cada momento contigo es maravilloso.",
-      /* 07 */ "Porque contigo el tiempo pasa diferente.",
-      /* 08 */ "Porque me siento orgulloso de ti.",
-      /* 09 */ "Porque admiro la mujer que eres.",
-      /* 10 */ "Porque eres inteligente.",
-      /* 11 */ "Porque tu forma de pensar me encanta.",
-      /* 12 */ "Porque me inspiras.",
-      /* 13 */ "Porque eres una mujer maravillosa.",
-      /* 14 */ "Porque tienes un corazón bonito.",
-      /* 15 */ "Porque me haces sentir amado.",
-      /* 16 */ "Porque contigo soy <em>yo</em>.",
-      /* 17 */ "Porque me aceptas como soy.",
-      /* 18 */ "Porque me miras con ternura.",
-      /* 19 */ "Porque tu sonrisa me calma.",
-      /* 20 */ "Porque tu risa se me queda grabada.",
-      /* 21 */ "Porque me gusta cómo me besas.",
-      /* 22 */ "Porque me gusta cómo me miras.",
-      /* 23 */ "Porque me gusta cómo me hablas.",
-      /* 24 */ "Porque me gusta cómo me cuidas.",
-      /* 25 */ "Porque me gusta dormir contigo.",
-      /* 26 */ "Porque despertar a tu lado se siente bien.",
-      /* 27 */ "Porque contigo lo simple es especial.",
-      /* 28 */ "Porque cada salida contigo vale la pena.",
-      /* 29 */ "Porque cada recuerdo contigo importa.",
-      /* 30 */ "Porque contigo todo se siente <em>real</em>.",
-      /* 31 */ "Porque eres fuerte.",
-      /* 32 */ "Porque eres sensible.",
-      /* 33 */ "Porque eres auténtica.",
-      /* 34 */ "Porque no finges.",
-      /* 35 */ "Porque confías en mí.",
-      /* 36 */ "Porque yo confío en ti.",
-      /* 37 */ "Porque creemos el uno en el otro.",
-      /* 38 */ "Porque incluso en los momentos difíciles sigues aquí.",
-      /* 39 */ "Porque no te rindes fácil.",
-      /* 40 */ "Porque luchas por lo que amas.",
-      /* 41 */ "Porque me haces querer ser mejor.",
-      /* 42 */ "Porque contigo aprendí a amar bonito.",
-      /* 43 */ "Porque contigo aprendí a tener paciencia.",
-      /* 44 */ "Porque contigo aprendí a cuidar.",
-      /* 45 */ "Porque me haces sentir importante.",
-      /* 46 */ "Porque me eliges.",
-      /* 47 */ "Porque yo te elijo todos los días.",
-      /* 48 */ "Porque contigo quiero un futuro.",
-      /* 49 */ "Porque contigo quiero crecer.",
-      /* 50 */ "Porque contigo quiero <em>todo</em>.",
-      /* 51 */ "Porque tu presencia me tranquiliza.",
-      /* 52 */ "Porque tu voz me hace bien.",
-      /* 53 */ "Porque tu esencia es única.",
-      /* 54 */ "Porque me enamoré de tu alma.",
-      /* 55 */ "Porque me enamoré de tu manera de ser.",
-      /* 56 */ "Porque me enamoré de cómo me haces sentir.",
-      /* 57 */ "Porque me enamoré sin darme cuenta.",
-      /* 58 */ "Porque llegaste y te quedaste.",
-      /* 59 */ "Porque eres parte de mi vida.",
-      /* 60 */ "Porque eres parte de mi corazón.",
-      /* 61 */ "Porque la distancia no cambia lo que siento.",
-      /* 62 */ "Porque extrañarte confirma cuánto te amo.",
-      /* 63 */ "Porque pensar en ti me da fuerza.",
-      /* 64 */ "Porque imaginarte me da ilusión.",
-      /* 65 */ "Porque esperarte vale la pena.",
-      /* 66 */ "Porque volver a verte es lo que más quiero.",
-      /* 67 */ "Porque contigo los sueños se sienten posibles.",
-      /* 68 */ "Porque contigo quiero seguir creando recuerdos.",
-      /* 69 */ "Porque cada etapa contigo importa.",
-      /* 70 */ "Porque no eres una etapa.",
-      /* 71 */ "Porque eres mi lugar.",
-      /* 72 */ "Porque eres mi calma.",
-      /* 73 */ "Porque eres mi amor.",
-      /* 74 */ "Porque contigo me siento completo.",
-      /* 75 */ "Porque contigo soy feliz.",
-      /* 76 */ "Porque contigo me siento en casa.",
-      /* 77 */ "Porque contigo todo tiene sentido.",
-      /* 78 */ "Porque contigo la vida es más bonita.",
-      /* 79 */ "Porque contigo quiero quedarme.",
-      /* 80 */ "Porque contigo quiero <em>siempre</em>.",
-      /* 81 */ "Porque llevo una luna tatuada pensando en ti.",
-      /* 82 */ "Porque Luna eres tú.",
-      /* 83 */ "Porque no hay nadie como tú.",
-      /* 84 */ "Porque no te cambiaría por nada.",
-      /* 85 */ "Porque te amo incluso en los días difíciles.",
-      /* 86 */ "Porque te amo con paciencia.",
-      /* 87 */ "Porque te amo con respeto.",
-      /* 88 */ "Porque te amo con todo mi corazón.",
-      /* 89 */ "Porque te amo sin condiciones.",
-      /* 90 */ "Porque te amo de verdad.",
-      /* 91 */ "Porque quiero cuidarte.",
-      /* 92 */ "Porque quiero verte feliz.",
-      /* 93 */ "Porque quiero acompañarte.",
-      /* 94 */ "Porque quiero caminar a tu lado.",
-      /* 95 */ "Porque quiero construir contigo.",
-      /* 96 */ "Porque quiero una vida contigo.",
-      /* 97 */ "Porque quiero amarte bien.",
-      /* 98 */ "Porque quiero amarte bonito.",
-      /* 99 */ "Porque quiero amarte siempre.",
-      /* 100 */ "Porque amar a <em>Luna</em> es lo mejor que me ha pasado."
+      "Porque tus besos me hacen sentir en paz.",
+      "Porque cuando me besas la nariz me pongo feliz.",
+      "Porque verte me hace feliz <em>de verdad</em>.",
+      "Porque te extraño incluso cuando todo está bien.",
+      "Porque tu abrazo es mi lugar seguro.",
+      "Porque cada momento contigo es maravilloso.",
+      "Porque contigo el tiempo pasa diferente.",
+      "Porque me siento orgulloso de ti.",
+      "Porque admiro la mujer que eres.",
+      "Porque eres inteligente.",
+      "Porque tu forma de pensar me encanta.",
+      "Porque me inspiras.",
+      "Porque eres una mujer maravillosa.",
+      "Porque tienes un corazón bonito.",
+      "Porque me haces sentir amado.",
+      "Porque contigo soy <em>yo</em>.",
+      "Porque me aceptas como soy.",
+      "Porque me miras con ternura.",
+      "Porque tu sonrisa me calma.",
+      "Porque tu risa se me queda grabada.",
+      "Porque me gusta cómo me besas.",
+      "Porque me gusta cómo me miras.",
+      "Porque me gusta cómo me hablas.",
+      "Porque me gusta cómo me cuidas.",
+      "Porque me gusta dormir contigo.",
+      "Porque despertar a tu lado se siente bien.",
+      "Porque contigo lo simple es especial.",
+      "Porque cada salida contigo vale la pena.",
+      "Porque cada recuerdo contigo importa.",
+      "Porque contigo todo se siente <em>real</em>.",
+      "Porque eres fuerte.",
+      "Porque eres sensible.",
+      "Porque eres auténtica.",
+      "Porque no finges.",
+      "Porque confías en mí.",
+      "Porque yo confío en ti.",
+      "Porque creemos el uno en el otro.",
+      "Porque incluso en los momentos difíciles sigues aquí.",
+      "Porque no te rindes fácil.",
+      "Porque luchas por lo que amas.",
+      "Porque me haces querer ser mejor.",
+      "Porque contigo aprendí a amar bonito.",
+      "Porque contigo aprendí a tener paciencia.",
+      "Porque contigo aprendí a cuidar.",
+      "Porque me haces sentir importante.",
+      "Porque me eliges.",
+      "Porque yo te elijo todos los días.",
+      "Porque contigo quiero un futuro.",
+      "Porque contigo quiero crecer.",
+      "Porque contigo quiero <em>todo</em>.",
+      "Porque tu presencia me tranquiliza.",
+      "Porque tu voz me hace bien.",
+      "Porque tu esencia es única.",
+      "Porque me enamoré de tu alma.",
+      "Porque me enamoré de tu manera de ser.",
+      "Porque me enamoré de cómo me haces sentir.",
+      "Porque me enamoré sin darme cuenta.",
+      "Porque llegaste y te quedaste.",
+      "Porque eres parte de mi vida.",
+      "Porque eres parte de mi corazón.",
+      "Porque la distancia no cambia lo que siento.",
+      "Porque extrañarte confirma cuánto te amo.",
+      "Porque pensar en ti me da fuerza.",
+      "Porque imaginarte me da ilusión.",
+      "Porque esperarte vale la pena.",
+      "Porque volver a verte es lo que más quiero.",
+      "Porque contigo los sueños se sienten posibles.",
+      "Porque contigo quiero seguir creando recuerdos.",
+      "Porque cada etapa contigo importa.",
+      "Porque no eres una etapa.",
+      "Porque eres mi lugar.",
+      "Porque eres mi calma.",
+      "Porque eres mi amor.",
+      "Porque contigo me siento completo.",
+      "Porque contigo soy feliz.",
+      "Porque contigo me siento en casa.",
+      "Porque contigo todo tiene sentido.",
+      "Porque contigo la vida es más bonita.",
+      "Porque contigo quiero quedarme.",
+      "Porque contigo quiero <em>siempre</em>.",
+      "Porque llevo una luna tatuada pensando en ti.",
+      "Porque Luna eres tú.",
+      "Porque no hay nadie como tú.",
+      "Porque no te cambiaría por nada.",
+      "Porque te amo incluso en los días difíciles.",
+      "Porque te amo con paciencia.",
+      "Porque te amo con respeto.",
+      "Porque te amo con todo mi corazón.",
+      "Porque te amo sin condiciones.",
+      "Porque te amo de verdad.",
+      "Porque quiero cuidarte.",
+      "Porque quiero verte feliz.",
+      "Porque quiero acompañarte.",
+      "Porque quiero caminar a tu lado.",
+      "Porque quiero construir contigo.",
+      "Porque quiero una vida contigo.",
+      "Porque quiero amarte bien.",
+      "Porque quiero amarte bonito.",
+      "Porque quiero amarte siempre.",
+      "Porque amar a <em>Luna</em> es lo mejor que me ha pasado."
     ];
 
-    /* ─────────────────────────────────────────────────────────
-       UTILS
-    ───────────────────────────────────────────────────────── */
+    /* ── FLIGHT COUNTDOWN ── */
+    function updateCountdown() {
+      const now  = new Date();
+      const diff = FLIGHT_DATE - now;
+
+      const wrap = document.getElementById("flightCountdown");
+
+      if (diff <= 0) {
+        // She's landed!
+        wrap.innerHTML = `
+          <div class="flight-arrived">
+            🌙 &nbsp;¡Ya llegó Luna! &nbsp;✈️
+          </div>`;
+        return;
+      }
+
+      const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById("cd-days").textContent  = String(days).padStart(2, "0");
+      document.getElementById("cd-hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("cd-mins").textContent  = String(mins).padStart(2, "0");
+      document.getElementById("cd-secs").textContent  = String(secs).padStart(2, "0");
+    }
+
+    /* ── UTILS ── */
     function daysBetween(dateStr) {
       const start = new Date(dateStr + "T00:00:00");
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const diff = today - start;
-      return Math.floor(diff / (1000 * 60 * 60 * 24));
+      return Math.floor((today - start) / (1000 * 60 * 60 * 24));
     }
 
     function formatDate(dateStr) {
@@ -748,9 +875,7 @@
       return d.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
     }
 
-    /* ─────────────────────────────────────────────────────────
-       PETALS in HERO
-    ───────────────────────────────────────────────────────── */
+    /* ── PETALS ── */
     function buildPetals() {
       const hero = document.getElementById("hero");
       const colors = ["#F2D9D0","#E8C5BD","#D4C4C0","#F0DDD6"];
@@ -770,9 +895,7 @@
       }
     }
 
-    /* ─────────────────────────────────────────────────────────
-       FLOATING HEARTS (finale)
-    ───────────────────────────────────────────────────────── */
+    /* ── FINALE HEARTS ── */
     function buildFinaleHearts() {
       const wrap = document.getElementById("finaleHearts");
       const emojis = ["♥","✦","·","❧"];
@@ -791,15 +914,12 @@
       }
     }
 
-    /* ─────────────────────────────────────────────────────────
-       RENDER
-    ───────────────────────────────────────────────────────── */
+    /* ── RENDER ── */
     function render() {
-      const elapsed = daysBetween(START_DATE); // 0-based (day 0 = day 1 unlocked)
+      const elapsed = daysBetween(START_DATE);
       const unlockedCount = Math.min(elapsed + 1, 100);
       const isComplete = elapsed >= 99;
 
-      /* ── HERO BADGE ── */
       const badge = document.getElementById("heroBadge");
       if (elapsed < 0) {
         badge.innerHTML = `<span>Este regalo comienza el ${formatDate(START_DATE)}</span>`;
@@ -809,13 +929,11 @@
         badge.innerHTML = `<span>Día ${elapsed + 1} de 100 desbloqueado</span>`;
       }
 
-      /* ── PROGRESS BAR ── */
       const pct = Math.round((unlockedCount / 100) * 100);
       document.getElementById("progressFill").style.width = pct + "%";
       document.getElementById("progressCount").textContent = `${unlockedCount} / 100`;
       document.getElementById("progressLabel").textContent = elapsed < 0 ? "Aún no ha comenzado" : "Tu recorrido";
 
-      /* ── SECTION TITLE ── */
       if (elapsed < 0) {
         document.getElementById("sectionTitle").textContent = "El camino está por comenzar";
         document.getElementById("sectionDesc").textContent = `Vuelve el ${formatDate(START_DATE)} para descubrir la primera razón.`;
@@ -828,30 +946,21 @@
         document.getElementById("sectionDesc").textContent = "Cada día que pasa, una nueva pieza de este amor se revela.";
       }
 
-      /* ── CARDS ── */
       const grid = document.getElementById("grid");
       grid.innerHTML = "";
 
       if (elapsed < 0) {
-        // Nothing unlocked yet — show all locked
-        for (let i = 0; i < 100; i++) {
-          grid.appendChild(buildCard(i, "locked"));
-        }
+        for (let i = 0; i < 100; i++) grid.appendChild(buildCard(i, "locked"));
         return;
       }
 
-      /* Render unlocked cards (newest first so today is on top) */
       for (let i = elapsed; i >= 0 && i < 100; i--) {
-        const type = i === elapsed ? "today" : "unlocked";
-        grid.appendChild(buildCard(i, type));
+        grid.appendChild(buildCard(i, i === elapsed ? "today" : "unlocked"));
       }
-
-      /* Locked cards below */
       for (let i = Math.min(elapsed + 1, 100); i < 100; i++) {
         grid.appendChild(buildCard(i, "locked"));
       }
 
-      /* ── FINALE ── */
       if (isComplete) {
         document.getElementById("finale").classList.add("active");
         buildFinaleHearts();
@@ -888,9 +997,7 @@
       return card;
     }
 
-    /* ─────────────────────────────────────────────────────────
-       SCROLL REVEAL
-    ───────────────────────────────────────────────────────── */
+    /* ── SCROLL REVEAL ── */
     function initReveal() {
       const els = document.querySelectorAll(".reveal");
       const io = new IntersectionObserver((entries) => {
@@ -899,15 +1006,11 @@
       els.forEach(el => io.observe(el));
     }
 
-    /* ─────────────────────────────────────────────────────────
-       SPOTIFY TOGGLE
-    ───────────────────────────────────────────────────────── */
+    /* ── SPOTIFY ── */
     function toggleSpotify() {
-      const panel = document.getElementById("spotifyPanel");
-      panel.classList.toggle("open");
+      document.getElementById("spotifyPanel").classList.toggle("open");
     }
 
-    // Close panel when clicking outside
     document.addEventListener("click", (e) => {
       const panel = document.getElementById("spotifyPanel");
       const btn   = document.getElementById("spotifyBtn");
@@ -916,24 +1019,20 @@
       }
     });
 
-    /* ─────────────────────────────────────────────────────────
-       SCROLL TO TODAY
-    ───────────────────────────────────────────────────────── */
+    /* ── SCROLL TO TODAY ── */
     function scrollToToday() {
       const todayCard = document.querySelector(".reason-card.today");
       const target = todayCard || document.getElementById("mainContent");
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
-    /* ─────────────────────────────────────────────────────────
-       INIT
-    ───────────────────────────────────────────────────────── */
+    /* ── INIT ── */
     document.addEventListener("DOMContentLoaded", () => {
       buildPetals();
       render();
       initReveal();
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
     });
   </script>
 </body>
